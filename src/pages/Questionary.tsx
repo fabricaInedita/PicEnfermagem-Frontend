@@ -115,6 +115,7 @@ function Questionary() {
             
                                     </div>
                                     {
+                                    questions.length == 1?
                                         !questions[0].verify? 
                                             <Button submit={handleVerifyQuestion}>
                                                 Verificar
@@ -123,11 +124,15 @@ function Questionary() {
                                             <Button submit={handleNextForm}>
                                                 Continuar
                                             </Button>
+                                    :
+                                        <Button>
+                                            Terminar
+                                        </Button>
                                     }
                                 </div> 
                             :
                             <div className='flex justify-center items-center h-full'> 
-                                <Loading></Loading>
+                                <Loading className={"w-8 h-8"}></Loading>
                             </div>
                         }
 

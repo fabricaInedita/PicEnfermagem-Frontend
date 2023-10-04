@@ -8,16 +8,15 @@ import { useNavigate } from 'react-router-dom';
 
 export interface AuthContextType {
   isAuthenticated: boolean;
-  signIn: ({ email, password }: { email: string; password: string; }) => void;
+  signIn: (credentials: { studentCode: string; password: string }) => Promise<any>;
   logout: () => void;
 }
 
 export const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
-  signIn: () => {},
+  signIn: () => Promise.resolve(),
   logout: () => {}
 });
-
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   
@@ -25,12 +24,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const token = Cookies.get('tokenTdcAdminLogin');
 
-  const [isAuthenticated, setIsAuthenticated] = useState(/* !!token */ true);
+  const [isAuthenticated, setIsAuthenticated] = useState( !!token );
 
-  function signIn({ email, password }: { email: string; password: string }) {
+  async function signIn({ studentCode, password }: { studentCode: string; password: string }) {
 
-     axios.post('https://projectpaintball.azurewebsites.net/user/login', {
-        email: email,
+     const result = axios.post('https://srvweb01.azurewebsites.net/user/login', {
+        email: studentCode,
         password: password
       })
       .then(response => {
@@ -50,9 +49,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       })
       .catch((error)=>{
         useErrors(error);
+        console.log(error)
       })
 
-
+      return await result 
   }
 
   useEffect(() => {
@@ -65,10 +65,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (token) {
         logout()
       }
-   /*    else if(window.location.pathname!=="/login") {
-        console.log(1)
+      else if(
+        window.location.pathname!=="/login"&&
+        window.location.pathname!=="/signup"
+      ) {
         navigate("/login")
-      } */
+      } 
     }, timeDiference);
 
   }, [])

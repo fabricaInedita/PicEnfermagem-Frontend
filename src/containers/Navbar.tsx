@@ -8,6 +8,8 @@ import { AuthContext } from '../context/AuthContext';
 
 function Navbar() {
 
+  const {logout} = useContext(AuthContext)
+
   const [navStyle, setNavStyle] = useState(false);
 
   const [mobileMenuOpen,setMobileMenuOpen] = useState(false)
@@ -29,7 +31,7 @@ function Navbar() {
   }, [navStyle]);
 
   function handleLogout() {
-    window.location.pathname = "/login"
+    logout()
   }
 
   const {isAuthenticated}:any = useContext(AuthContext)

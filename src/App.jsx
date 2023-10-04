@@ -4,30 +4,28 @@ import Home from './pages/Home';
 import Navbar from './containers/Navbar';
 import Questionary from './pages/Questionary';
 import Login from './pages/Login';
-import Singup from './pages/Singup';
+import Signup from './pages/Signup';
 import {AuthProvider} from './context/AuthContext';
-
+import { ToastContainer } from 'react-toastify';
+import Ranking from './pages/Ranking';
 function App() {
   return (
-    
-        <Router>
-          
-          <AuthProvider>
-                <Navbar/>
-                <div className="w-full h-full flex justify-center items-center">
-                  <Routes>
-                    <Route path="login" element={<Login/>} />
-                    <Route path="singup" element={<Singup/>} />
-                    <Route path="home" element={<Home/>} />
-                    <Route path="questionary" element={<Questionary/>} />
-                    <Route path="ranking" element={<Home/>} />
-                    <Route path="" element={<Home/>} />
-                  </Routes>
-                </div>
-          </AuthProvider>
-
-        </Router>
-        
+    <Router>
+      <AuthProvider>
+          <ToastContainer/>
+          <Navbar/>
+            <div className="w-full h-full flex justify-center items-center">
+              <Routes>
+                <Route path="login" element={<Login/>} />
+                <Route path="signup" element={<Signup/>} />
+                <Route path="home" element={<Home/>} />
+                <Route path="questionary" element={<Questionary/>} />
+                <Route path="ranking" element={<Ranking/>} />
+                <Route path="" element={<Home/>} />
+              </Routes>
+            </div>
+      </AuthProvider>
+    </Router>
   );
 }
 

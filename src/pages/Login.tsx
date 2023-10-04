@@ -1,8 +1,56 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Theme from '../components/Theme'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { z } from 'zod'
+import { useForm } from 'react-hook-form'
+import { AuthContext } from '../context/AuthContext'
+import Loading from '../components/Loading'
+import Button from '../components/Button'
+import Cookies from 'js-cookie'
+import { zodResolver } from "@hookform/resolvers/zod"
+import Input from '../components/Input'
 
 function Login() {
+
+    const [loginLoading,setLoginLoding] = useState(false)
+
+    const navigate = useNavigate()
+
+    const formSchema = z.object({
+      studentCode: z.string().nonempty("Campo Obrigatório").refine(value=>
+        {
+            if (/^[0-9]+$/.test(value)) {
+                return true;
+            } 
+            else {
+                return false;
+            }
+        },
+        "Numero inválido"
+    ),
+      password: z.string().nonempty("Campo Obrigatório")
+    })
+  
+    const { handleSubmit, formState:{errors}, register } = useForm< z.infer<typeof formSchema >>(
+      {
+        resolver:zodResolver(formSchema),
+      }
+    );
+  
+    const {signIn} = useContext(AuthContext)
+  
+    async function handleSingIn(data:any) {
+      console.log("fdata")
+      setLoginLoding(true)
+      await signIn(data)
+      .then(()=>{
+        setLoginLoding(false)
+      })
+      .catch(()=>{
+        setLoginLoding(false)
+      })
+    } 
+  
   return (
     <Theme>
         <section className=" h-screen item">
@@ -15,19 +63,27 @@ function Login() {
                         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                             Entre na sua conta
                         </h1>
-                        <form className="space-y-4 md:space-y-6" action="#">
-                            <div>
-                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Codigo de aluno</label>
-                                <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" />
-                            </div>
-                            <div>
-                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Senha</label>
-                                <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-                            </div>
-                            <button type="submit" className="w-full bg-purple-600 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Entrar</button>
-                            <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                <Link to="/singup" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Cadastre-se</Link>
-                            </p>
+                        <form onSubmit={handleSubmit(handleSingIn)} className="space-y-4 md:space-y-6" action="#">
+                        <Input
+                            register={register('studentCode')}
+                            label="Codigo do aluno"
+                            error={errors.studentCode}
+                            />
+                        <Input
+                            register={register('password')}
+                            label="Senha"
+                            type="password"
+                            error={errors.password}
+                        />               
+                        <div className="h-20 flex justify-center items-center">
+                          {loginLoading?
+                                <Loading visible={true} className={"w-10 h-10"}></Loading>:
+                                <button type="submit" className="w-full bg-purple-600 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Entrar</button>
+                            }
+                        </div>
+                          <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                              <Link to="/signup" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Cadastre-se</Link>
+                          </p>
                         </form>
                     </div>
                 </div>
