@@ -8,6 +8,7 @@ export class LoginService {
             password: password
           })
           .then(response => {
+            console.log(response)
             return response 
           })
           .catch((error)=>{

@@ -22,6 +22,7 @@ function App() {
                 <Route path="questionary" element={<Questionary/>} />
                 <Route path="ranking" element={<Ranking/>} />
                 <Route path="" element={<Home/>} />
+                <Route path="index.html" element={<Home/>} />
               </Routes>
             </div>
       </AuthProvider>

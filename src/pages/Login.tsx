@@ -17,7 +17,7 @@ function Login() {
     const navigate = useNavigate()
 
     const formSchema = z.object({
-      studentCode: z.string().nonempty("Campo Obrigatório").refine(value=>
+      studentCode: z.string().nonempty("Campo Obrigatório")/* .refine(value=>
         {
             if (/^[0-9]+$/.test(value)) {
                 return true;
@@ -27,7 +27,7 @@ function Login() {
             }
         },
         "Numero inválido"
-    ),
+    ) */,
       password: z.string().nonempty("Campo Obrigatório")
     })
   
