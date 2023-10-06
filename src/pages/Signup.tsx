@@ -6,12 +6,14 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Loading from '../components/Loading'
-import { signupService } from '../services/signupService'
+import { SignupService } from './../services/SignupService';
 
 function Signup() {
     const [loginLoading, setLoginLoding] = useState(false)
 
     const [signUpSuccefull, setSignUpSuccefull] = useState(false)
+
+    const signupService = new SignupService() 
 
     const formSchema = z.object({
         studentCode: z.string().nonempty("Campo Obrigatório").refine(value => {
@@ -36,7 +38,7 @@ function Signup() {
 
     function handleSingup(data) {
         setLoginLoding(true)
-        signupService(data)
+        signupService.signupPost(data)
             .then(() => {
                 setLoginLoding(false)
                 setSignUpSuccefull(true)

@@ -1,153 +1,137 @@
-export const questionsTest = [
+export const questionsTest = {
+  "punctuation": 0,
+  "questionResponses": [
     {
-      id: "xxxx",
-      question: "Qual é a capital da França?",
-      minPoints:100,
-      maxPoints:140,
-      expectedTime:30,
-      replys: [
+      "id": 6,
+      "statement": "string",
+      "maxPunctuation": 0,
+      "minPunctuation": 0,
+      "difficulty": "",
+      "category": {
+        "name": "Categoria Teste",
+        "description": "Este é um teste do POST da categoria"
+      },
+      "alternatives": [
         {
-          response: "Londres",
-          valid: false,
-          selected: false
+          "option": "string",
+          "description": null,
+          "isCorrect": false
         },
         {
-          response: "Madrid",
-          valid: false,
-          selected: false
+          "option": "string",
+          "description": null,
+          "isCorrect": true
         },
         {
-          response: "Paris",
-          valid: true,
-          selected: false
+          "option": "string",
+          "description": null,
+          "isCorrect": false
         },
         {
-          response: "Berlim",
-          valid: false,
-          selected: false
+          "option": "string",
+          "description": null,
+          "isCorrect": false
         }
-      ],
-      verify: false
+      ]
     },
     {
-      id: "xxxx",
-      question: "Quem é o autor de 'Romeu e Julieta'?",
-      minPoints:100,
-      maxPoints:140,
-      expectedTime:30,
-      replys: [
+      "id": 7,
+      "statement": "string",
+      "maxPunctuation": 70,
+      "minPunctuation": 50,
+      "difficulty": "Fácil",
+      "category": {
+        "name": "Categoria Teste",
+        "description": "Este é um teste do POST da categoria"
+      },
+      "alternatives": [
         {
-          response: "Charles Dickens",
-          valid: false,
-          selected: false
+          "option": "string",
+          "description": null,
+          "isCorrect": false
         },
         {
-          response: "Jane Austen",
-          valid: false,
-          selected: false
+          "option": "string",
+          "description": null,
+          "isCorrect": false
         },
         {
-          response: "William Shakespeare",
-          valid: true,
-          selected: false
+          "option": "string",
+          "description": null,
+          "isCorrect": true
         },
         {
-          response: "F. Scott Fitzgerald",
-          valid: false,
-          selected: false
+          "option": "string",
+          "description": null,
+          "isCorrect": false
         }
-      ],
-      verify: false
+      ]
     },
     {
-      id: "xxxx",
-      question: "Qual é o maior rio do mundo?",
-      minPoints:100,
-      maxPoints:140,
-      expectedTime:30,
-      replys: [
+      "id": 9,
+      "statement": "string",
+      "maxPunctuation": 100,
+      "minPunctuation": 140,
+      "difficulty": "Média",
+      "category": {
+        "name": "Categoria Teste",
+        "description": "Este é um teste do POST da categoria"
+      },
+      "alternatives": [
         {
-          response: "Rio Amazonas",
-          valid: true,
-          selected: false
+          "option": "string",
+          "description": null,
+          "isCorrect": false
         },
         {
-          response: "Rio Nilo",
-          valid: false,
-          selected: false
+          "option": "string",
+          "description": null,
+          "isCorrect": false
         },
         {
-          response: "Rio Tâmisa",
-          valid: false,
-          selected: false
+          "option": "string",
+          "description": null,
+          "isCorrect": true
         },
         {
-          response: "Rio Yangtzé",
-          valid: false,
-          selected: false
+          "option": "string",
+          "description": null,
+          "isCorrect": false
         }
-      ],
-      verify: false
+      ]
     },
     {
-      id: "xxxx",
-      question: "Quem escreveu a obra 'Cem Anos de Solidão'?",
-      minPoints:100,
-      maxPoints:140,
-      expectedTime:30,
-      replys: [
+      "id": 10,
+      "statement": "string",
+      "maxPunctuation": 200,
+      "minPunctuation": 280,
+      "difficulty": "Difícil",
+      "category": {
+        "name": "Categoria Teste",
+        "description": "Este é um teste do POST da categoria"
+      },
+      "alternatives": [
         {
-          response: "Pablo Neruda",
-          valid: false,
-          selected: false
+          "option": "string",
+          "description": null,
+          "isCorrect": false
         },
         {
-          response: "Isabel Allende",
-          valid: false,
-          selected: false
+          "option": "string",
+          "description": null,
+          "isCorrect": false
         },
         {
-          response: "Gabriel García Márquez",
-          valid: true,
-          selected: false
+          "option": "string",
+          "description": null,
+          "isCorrect": true
         },
         {
-          response: "Julio Cortázar",
-          valid: false,
-          selected: false
+          "option": "string",
+          "description": null,
+          "isCorrect": false
         }
-      ],
-      verify: false
-    },
-    {
-      id: "xxxx",
-      question: "Qual é o maior deserto do mundo?",
-      minPoints:100,
-      maxPoints:140,
-      expectedTime:30,
-      replys: [
-        {
-          response: "Deserto de Atacama",
-          valid: false,
-          selected: false
-        },
-        {
-          response: "Deserto do Saara",
-          valid: true,
-          selected: false
-        },
-        {
-          response: "Deserto do Gobi",
-          valid: false,
-          selected: false
-        },
-        {
-          response: "Deserto do Kalahari",
-          valid: false,
-          selected: false
-        }
-      ],
-      verify: false
+      ]
     }
   ]
-  
+}

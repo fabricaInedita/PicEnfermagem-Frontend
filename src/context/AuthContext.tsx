@@ -5,6 +5,7 @@ import { useErrors } from '../utils/hooks/Errors';
 import { toast } from 'react-toastify';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { LoginService } from './../services/LoginService';
 
 export interface AuthContextType {
   isAuthenticated: boolean;
@@ -20,18 +21,17 @@ export const AuthContext = createContext<AuthContextType>({
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const token = Cookies.get('tokenTdcAdminLogin');
+
+  const loginService = new LoginService()
 
   const [isAuthenticated, setIsAuthenticated] = useState( !!token );
 
   async function signIn({ studentCode, password }: { studentCode: string; password: string }) {
 
-     const result = axios.post('https://srvweb01.azurewebsites.net/user/login', {
-        email: studentCode,
-        password: password
-      })
+     const result = loginService.loginPost({ studentCode, password })
       .then(response => {
 
         setIsAuthenticated(true)
@@ -55,6 +55,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       return await result 
   }
 
+  const authNotRequired = [
+    "/login",
+    "/signup"
+  ]
+
   useEffect(() => {
 
     const expirationDate:any = Cookies.get("expirationDateTimeAccessToken")
@@ -66,8 +71,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         logout()
       }
       else if(
-        window.location.pathname!=="/login"&&
-        window.location.pathname!=="/signup"
+        !authNotRequired.includes(window.location.pathname)
       ) {
         navigate("/login")
       } 

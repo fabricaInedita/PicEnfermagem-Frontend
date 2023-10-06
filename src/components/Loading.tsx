@@ -1,4 +1,4 @@
-import loadingImg from '../assets/circle.png'
+import loadingImg from '../assets/spiner.svg'
 
 function Loading({className,visible}:any) {
   return (
