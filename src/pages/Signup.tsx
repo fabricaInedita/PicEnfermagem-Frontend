@@ -6,7 +6,7 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Loading from '../components/Loading'
-import { SignupService } from './../services/SignupService';
+import { SignupService } from '../services/SignupService';
 
 function Signup() {
     const [loginLoading, setLoginLoding] = useState(false)
