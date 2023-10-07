@@ -157,7 +157,7 @@ function Questionary() {
                                                 <div className={'gap-3 flex flex-col transition-all' + (formTransition.opacity ? " opacity-0" : " opacity-100")}>
                                                     <div className='bg-purple-600  border-white border-2 rounded-lg p-5'>
                                                         <p className='text-white text-md'>
-                                                            {questions.questionResponses[0].category.description}
+                                                            {questions.questionResponses[0].statement}
                                                         </p>
                                                     </div>
                                                     <div className='gap-3 flex flex-col'>
