@@ -53,6 +53,8 @@ function Questionary() {
                 .then(() => {
                     const updateQuestions = { ...questions }
 
+                    updateQuestions.punctuation = updateQuestions.punctuation + points
+
                     updateQuestions.questionResponses[0].verify = true
                     
                     setQuestions(updateQuestions)    
