@@ -1,8 +1,8 @@
 
 import axios from 'axios';
 import { getQuestionsUrl, postAnswerUrl } from './api';
-import { useErrors } from '../utils/hooks/Errors';
 import  Cookies  from 'js-cookie';
+import { useErrors } from '../utils/hooks/Errors';
 
 export class QuestionaryService {
     private token = Cookies.get('tokenTdcAdminLogin');
@@ -18,7 +18,7 @@ export class QuestionaryService {
         return response
       })
       .catch((error)=>{
-        console.log(error)
+        useErrors(error)
         throw error 
       })
 
@@ -39,11 +39,10 @@ export class QuestionaryService {
         },
       ) 
       .then(response => {
-        console.log(response)
         return response
       })
       .catch((error)=>{
-        console.log(error)
+        useErrors(error)
         throw error 
       })
 

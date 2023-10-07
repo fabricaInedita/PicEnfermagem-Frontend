@@ -1,36 +1,63 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Theme from '../components/Theme'
 import star from '../assets/star.svg'
+import { RankingService } from '../services/RankingService'
+import Loading from '../components/Loading'
+import Limiter from '../components/Limiter'
 
 function Ranking() {
-  return (
-    <Theme>
-        <section className=" h-screen item">
-            <div className="flex flex-col items-center h-full gap-6 justify-start mt-20 px-6 py-8 mx-auto md:h-screen lg:py-0">
-                <div className='flex bg-purple-400 items-center justify-between text-white w-full p-3 gap-3 border-2 rounded-lg border-white'>
-                    <div className='gap-3 flex flex-col'>
-                        <p>Victor Alves Farias</p>
-                        <p>Pontuação: 2055</p>
+
+    const rankingService = new RankingService()
+
+    const [loadingRanking, setLoadingRanking] = useState(true)
+
+    const [ranking, setRanking] = useState()
+
+    useEffect(() => {
+        rankingService.getRanking()
+            .then(response => {
+                setRanking(response.data)
+                setLoadingRanking(false)
+            })
+            .catch(error => {
+            })
+    }, [])
+
+
+    return (
+        <Theme>
+            <div className='flex justify-center items-center'>
+                <Limiter>
+                    <div className='min-h-screen justify-center flex'>
+                        <div className='flex-1 flex flex-col gap-3 py-20 transition-all'>
+                            {
+                                loadingRanking
+                                    ?
+                                    <div className='flex justify-center items-center h-full'>
+                                        <Loading visible={true} className={"w-14 h-14"}></Loading>
+                                    </div>
+                                    :
+                                    ranking.map((item,index)=>
+                                        <div className='flex bg-purple-400 items-center justify-between text-white w-full p-3 gap-3 border-2 rounded-lg border-white'>
+                                            <div className='gap-3 flex flex-col'>
+                                                <p>{item.name}</p>
+                                                <p>Pontuação: {item.pontos}</p>
+                                            </div>
+                                            <div className='relative'>
+                                                <p className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-bold text-2xl'>{index+1}</p>
+                                                <img className='w-14 h-14' src={star} alt="" />
+                                            </div>
+                                        </div>
+                                    )
+                            }
+                        </div>
                     </div>
-                    <div className='relative'>
-                        <p className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-bold text-2xl'>1</p>
-                        <img className='w-14 h-14' src={star} alt="" />
-                    </div>
-                </div>
-                <div className='flex bg-purple-400 items-center justify-between text-white w-full p-3 gap-3 border-2 rounded-lg border-white'>
-                    <div className='gap-3 flex flex-col'>
-                        <p>Victor Alves Farias</p>
-                        <p>Pontuação: 2055</p>
-                    </div>
-                    <div className='relative'>
-                        <p className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-bold text-2xl'>1</p>
-                        <img className='w-14 h-14' src={star} alt="" />
-                    </div>
-                </div>
+                </Limiter>
             </div>
-        </section>
-    </Theme>
-  )
+        </Theme>
+
+
+    )
 }
 
 export default Ranking

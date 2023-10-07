@@ -1,5 +1,6 @@
 import axios from "axios";
 import { loginUrl } from "./api";
+import { useErrors } from "../utils/hooks/Errors";
 
 export class LoginService {
     loginPost({ studentCode, password }: { studentCode: string; password: string }) {
@@ -8,11 +9,11 @@ export class LoginService {
             password: password
           })
           .then(response => {
-            console.log(response)
             return response 
           })
           .catch((error)=>{
-           throw error
+            useErrors(error)
+            throw error
           })
           return result
     }

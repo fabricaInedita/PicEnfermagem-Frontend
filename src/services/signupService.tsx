@@ -16,6 +16,7 @@ export class SignupService {
           return response
         })
         .catch((error)=>{
+          useErrors(error)
           throw error 
         })
   
