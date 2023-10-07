@@ -1,11 +1,10 @@
 import { createContext, useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
-import axios from 'axios';
 import { useErrors } from '../utils/hooks/Errors';
 import { toast } from 'react-toastify';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LoginService } from './../services/LoginService';
+import { LoginService } from '../services/LoginService';
 
 export interface AuthContextType {
   isAuthenticated: boolean;

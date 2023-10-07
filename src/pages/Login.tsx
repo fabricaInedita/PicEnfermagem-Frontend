@@ -5,8 +5,6 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { AuthContext } from '../context/AuthContext'
 import Loading from '../components/Loading'
-import Button from '../components/Button'
-import Cookies from 'js-cookie'
 import { zodResolver } from "@hookform/resolvers/zod"
 import Input from '../components/Input'
 

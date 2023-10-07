@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Limiter from '../components/Limiter'
 import Button from '../components/Button'
 import Theme from '../components/Theme'
-import { questionsTest } from '../test/QuestionsTest'
 import Loading from '../components/Loading'
-import { QuestionaryService } from './../services/QuestionaryService';
-import { QuestionsModel } from '../entities/QuestionsModel';
+import { QuestionaryService } from '../services/QuestionaryService';
 import { Link, useNavigate } from "react-router-dom";
 import { QuestionaryModel } from '../entities/QuestionaryModel';
 
