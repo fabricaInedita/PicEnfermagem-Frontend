@@ -64,7 +64,11 @@ function Questionary() {
                 .catch((error) => {
                     setLoadingNextQuestion(false)
                 }) 
-                break;
+                break
+            }
+            else if(index == questions.questionResponses[0].alternatives.length-1)
+            {
+                setLoadingNextQuestion(false)
             }
         } 
     }
@@ -120,7 +124,6 @@ function Questionary() {
         if (!window.localStorage.getItem("startQuestionTIme")) {
             window.localStorage.setItem("startQuestionTIme", new Date().toISOString())
         }
-        console.log(new Date().toISOString())
         questionaryService.getQuestions()
             .then((response) => {
                 setQuestions(response.data)
