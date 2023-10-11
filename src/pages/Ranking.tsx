@@ -11,7 +11,7 @@ function Ranking() {
 
     const [loadingRanking, setLoadingRanking] = useState(true)
 
-    const [ranking, setRanking] = useState()
+    const [ranking, setRanking]:any[] = useState()
 
     useEffect(() => {
         rankingService.getRanking()
@@ -41,7 +41,7 @@ function Ranking() {
                                         <div className='flex bg-purple-400 items-center justify-between text-white w-full p-3 gap-3 border-2 rounded-lg border-white'>
                                             <div className='gap-3 flex flex-col'>
                                                 <p>{item.name}</p>
-                                                <p>Pontuação: {item.pontos}</p>
+                                                <p>Pontuação: {item.punctuation}</p>
                                             </div>
                                             <div className='relative'>
                                                 <p className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-bold text-2xl'>{index+1}</p>
