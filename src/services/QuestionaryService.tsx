@@ -25,12 +25,13 @@ export class QuestionaryService {
       return await result 
     }
 
-    async postAnswer(id:number, punctuation:number) {
+    async postAnswer(id:number, punctuation:number, alternativeId:number) {
 
       const result = axios.post(postAnswerUrl,
         {
           questionId: id,
-          punctuation: punctuation
+          punctuation: punctuation,
+          alternativeId: alternativeId
         },
         {
           headers: {

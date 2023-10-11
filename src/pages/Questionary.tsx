@@ -28,7 +28,8 @@ function Questionary() {
     })
 
     function handleSelectQuestion(index: number) {
-        if (!questions[0]?.verify) {
+
+        if (questions.questionResponses[0].verify !== true ) {
             const updateQuestions = { ...questions }
             updateQuestions.questionResponses[0].alternatives.forEach(item => {
                 item.selected = false
@@ -41,36 +42,47 @@ function Questionary() {
     function handleVerifyQuestion() {
         setLoadingNextQuestion(true)
 
-        if(!questions.questionResponses[0].verify==true) {
+        if (questions.questionResponses[0].verify !== true) {
             window.localStorage.setItem("endQuestionTIme", new Date().toISOString())
         }
 
         for (let index = 0; index < questions.questionResponses[0].alternatives.length; index++) {
             if (questions.questionResponses[0].alternatives[index].selected) {
-                const points = questions.questionResponses[0].alternatives.filter(item=> item.isCorrect&&item.selected)[0] ? calcPoints() : 0 
+                questionaryService.postAnswer(
+                    questions.questionResponses[0].id,
+                    calcPoints(),
+                    questions.questionResponses[0].alternatives[index].id
+                )
+                    .then(response => {
+                        const updateQuestions = { ...questions }
 
-                questionaryService.postAnswer(questions.questionResponses[0].id, Math.floor(points))
-                .then(() => {
-                    const updateQuestions = { ...questions }
+                        updateQuestions.questionResponses[0].alternatives.forEach((item,index) => {
 
-                    updateQuestions.punctuation = updateQuestions.punctuation + points
+                            if(item.id == response.data.alternativeCorrectId) {
 
-                    updateQuestions.questionResponses[0].verify = true
-                    
-                    setQuestions(updateQuestions)    
+                                updateQuestions.questionResponses[0].alternatives[index].isCorrect = true
+                            }
 
-                    setLoadingNextQuestion(false)
-                })
-                .catch((error) => {
-                    setLoadingNextQuestion(false)
-                }) 
+                        })
+
+                        updateQuestions.punctuation = response.data.punctuation
+
+                        updateQuestions.questionResponses[0].verify = true
+
+                        setQuestions(updateQuestions)
+
+                        setLoadingNextQuestion(false)
+                    })
+                    .catch((error) => {
+                        setLoadingNextQuestion(false)
+                    })
+
                 break
             }
-            else if(index == questions.questionResponses[0].alternatives.length-1)
-            {
+            else if (index == questions.questionResponses[0].alternatives.length - 1) {
                 setLoadingNextQuestion(false)
             }
-        } 
+        }
     }
 
     function handleNextForm() {
@@ -79,16 +91,16 @@ function Questionary() {
 
         updateQuestions.punctuation = updateQuestions.punctuation + points
 
-        updateQuestions.questionResponses.shift()
 
         setFormTransition({ ...formTransition, opacity: true })
 
         setTimeout(() => {
+            updateQuestions.questionResponses.shift()
             setQuestions(updateQuestions)
             setFormTransition({ ...formTransition, opacity: false })
             window.localStorage.setItem("startQuestionTIme", new Date().toISOString())
             setLoadingNextQuestion(false)
-        }, 300);
+        }, 400);
     }
 
     function handleFinishForm() {
@@ -142,114 +154,127 @@ function Questionary() {
                             {
                                 loadingQuestionary
                                     ?
-                                        questions.questionResponses.length>0
+                                    questions.questionResponses.length > 0
                                         ?
-                                            <React.Fragment>
-                                                <div className='flex gap-3'>
-                                                    <p className='text-white font-semibold p-3 flex-1 border-white border-2 rounded-lg'>
-                                                        {questions.questionResponses.length > 1 ?
-                                                            `Faltam ${questions.questionResponses.length} perguntas`
-                                                            :
-                                                            `Falta ${questions.questionResponses.length} pergunta`
-                                                        }
-                                                    </p>
-                                                    <p className='text-white font-semibold p-3 border-white border-2 rounded-lg bg-orange-400'>
-                                                        PT: {String(Math.floor(questions.punctuation)).padStart(4, "0")}
+                                        <React.Fragment>
+                                            <div className='flex gap-3'>
+                                                <p className='text-white font-semibold p-3 flex-1 border-white border-2 rounded-lg'>
+                                                    {questions.questionResponses.length > 1 ?
+                                                        `Faltam ${questions.questionResponses.length} perguntas`
+                                                        :
+                                                        `Falta ${questions.questionResponses.length} pergunta`
+                                                    }
+                                                </p>
+                                                <p className='text-white font-semibold p-3 border-white border-2 rounded-lg bg-orange-400'>
+                                                    PT: {String(Math.floor(questions.punctuation)).padStart(4, "0")}
+                                                </p>
+                                            </div>
+                                            <div className={'gap-3 flex flex-col transition-all' + (formTransition.opacity ? " opacity-0" : " opacity-100")}>
+                                                <div className='bg-purple-600  border-white border-2 rounded-lg p-5'>
+                                                    <p className='text-white text-md'>
+                                                        {questions.questionResponses[0].statement}
                                                     </p>
                                                 </div>
-                                                <div className={'gap-3 flex flex-col transition-all' + (formTransition.opacity ? " opacity-0" : " opacity-100")}>
-                                                    <div className='bg-purple-600  border-white border-2 rounded-lg p-5'>
-                                                        <p className='text-white text-md'>
-                                                            {questions.questionResponses[0].statement}
-                                                        </p>
-                                                    </div>
-                                                    <div className='gap-3 flex flex-col'>
-                                                        {
-                                                            questions.questionResponses[0].alternatives.map((item, index) =>
-                                                                <button
-                                                                    key={index}
-                                                                    onClick={() => handleSelectQuestion(index)}
-                                                                    className={
-                                                                        'border-2 cursor-pointer transition-all border-white  p-3 text-white font-semibold rounded-lg '
-                                                                        +
-                                                                        (
-                                                                            questions.questionResponses[0]?.verify
-                                                                                ?
-                                                                                (item.isCorrect && item.selected
-                                                                                    ? " bg-emerald-400" :
-                                                                                    item.isCorrect && " bg-emerald-400" ||
-                                                                                    item.selected && " bg-red-400"
-                                                                                )
-                                                                                :
-                                                                                (item.selected == true
-                                                                                    ?
-                                                                                    " bg-orange-400" :
-                                                                                    " bg-purple-500"
-                                                                                )
-                                                                        )
-                                                                    }>
-                                                                    {item.description}
-                                                                </button>
-                                                            )
-                                                        }
-
-                                                    </div>
+                                                <div className='gap-3 flex flex-col'>
                                                     {
-                                                            questions.questionResponses[0].verify==true ?
-                                                            
-                                                            questions.questionResponses.length>1?
-                                                                <Button 
-                                                                    disable={loadingNextQuestion} 
-                                                                    submit={handleNextForm}>
-                                                                    {
-                                                                        loadingNextQuestion 
+                                                        questions.questionResponses[0].alternatives.map((item, index) =>
+                                                            <button
+                                                                key={index}
+                                                                onClick={() => handleSelectQuestion(index)}
+                                                                className={
+                                                                    'border-2 cursor-pointer transition-all border-white  p-3 text-white font-semibold rounded-lg flex-col flex  '
+                                                                    +
+                                                                    (
+                                                                        questions.questionResponses[0]?.verify
+                                                                            ?
+                                                                            (item.isCorrect && item.selected
+                                                                                ? " bg-emerald-400" :
+                                                                                item.isCorrect && " bg-emerald-400" ||
+                                                                                item.selected && " bg-red-400"
+                                                                            )
+                                                                            :
+                                                                            (item.selected == true
+                                                                                ?
+                                                                                " bg-orange-400" :
+                                                                                " bg-purple-500"
+                                                                            )
+                                                                    )
+                                                                }>
+                                                                    <p className='text-sm text-zinc-200'>
+                                                                        {
+                                                                            questions.questionResponses[0]?.verify
+                                                                            &&
+                                                                            (item.isCorrect && item.selected
+                                                                                ? "Você acertou, parabéns!" :
+                                                                                item.isCorrect && "Alternativa correta está aqui!" ||
+                                                                                item.selected && "Que pena! Alternativa errada, continue tentando até o fim"
+                                                                            )
+                                                                        }
+                                                                    </p>
+                                                                    <p>
+                                                                        {item.description}
+                                                                    </p>
+                                                            </button>
+                                                        )
+                                                    }
+
+                                                </div>
+                                                {
+                                                    questions.questionResponses[0].verify == true ?
+
+                                                        questions.questionResponses.length > 1 ?
+                                                            <Button
+                                                                disable={loadingNextQuestion}
+                                                                submit={handleNextForm}>
+                                                                {
+                                                                    loadingNextQuestion
                                                                         ?
                                                                         <Loading visible={true} className={"w-6 h-6"} />
                                                                         :
                                                                         "Continuar"
-                                                                    }
-                                                                </Button>
-                                                                :
-                                                                <Button submit={handleFinishForm}>
-                                                                    Terminar
-                                                                </Button>
-
+                                                                }
+                                                            </Button>
                                                             :
-                                                                <Button 
-                                                                    disable={loadingNextQuestion} 
-                                                                    submit={handleVerifyQuestion}>
-                                                                   {
-                                                                        loadingNextQuestion 
-                                                                        ?
-                                                                        <Loading visible={true} className={"w-6 h-6"} />
-                                                                        :
-                                                                        "Verificar"
-                                                                    }
-                                                                </Button>
-                                                    }
-                                                </div>
-                                            </React.Fragment>
-                                        :
-                                            <div className='flex-1 flex text-white justify-center items-center gap-6 flex-col'>
+                                                            <Button submit={handleFinishForm}>
+                                                                Terminar
+                                                            </Button>
 
-                                                <div className='w-44 flex flex-col items-center justify-center gap-3'>
-                                                    <p className='text-2xl'>
-                                                        Opss...
-                                                    </p>
-                                                    <p className='text-lg'>
-                                                        Parece que você não tem mais perguntas disponiveis!
-                                                    </p>
-                                                </div>
-                                                <Link to={'/ranking'}>
-                                                        <Button>
-                                                            Ver ranking
+                                                        :
+                                                        <Button
+                                                            disable={loadingNextQuestion}
+                                                            submit={handleVerifyQuestion}>
+                                                            {
+                                                                loadingNextQuestion
+                                                                    ?
+                                                                    <Loading visible={true} className={"w-6 h-6"} />
+                                                                    :
+                                                                    "Verificar"
+                                                            }
                                                         </Button>
-                                                </Link>
+                                                }
                                             </div>
-                                    :
-                                        <div className='flex justify-center items-center h-full'>
-                                            <Loading visible={true} className={"w-14 h-14"}></Loading>
+                                        </React.Fragment>
+                                        :
+                                        <div className='flex-1 flex text-white justify-center items-center gap-6 flex-col'>
+
+                                            <div className='w-44 flex flex-col items-center justify-center gap-3'>
+                                                <p className='text-2xl'>
+                                                    Opss...
+                                                </p>
+                                                <p className='text-lg'>
+                                                    Parece que você não tem mais perguntas disponiveis!
+                                                </p>
+                                            </div>
+                                            <Link to={'/ranking'}>
+                                                <Button>
+                                                    Ver ranking
+                                                </Button>
+                                            </Link>
                                         </div>
+                                    :
+                                    <div className='flex justify-center items-center h-full'>
+                                        <Loading visible={true} className={"w-14 h-14"}></Loading>
+                                    </div>
                             }
                         </div>
                     </div>

@@ -10,9 +10,10 @@ export class QuestionsModel {
         description:string
     }
     public alternatives: {
+        id: number
         option: string
         description: string
-        isCorrect: false
+        isCorrect: boolean
         selected: boolean
     }[]
     public verify: boolean
