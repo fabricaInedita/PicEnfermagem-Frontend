@@ -21,7 +21,7 @@ function Input({register,error,defaultValue,label,type,mask}:any) {
               <input
                 {...register}
                 defaultValue={defaultValue}
-                type='text'
+                type='password'
                 autoComplete="off"
                 className='h-12 indent-3 bg-transparent w-full border-white rounded-lg border'
             />}
