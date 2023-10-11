@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Loading from '../components/Loading'
 import { SignupService } from '../services/SignupService';
+import Limiter from '../components/Limiter'
 
 function Signup() {
     const [loginLoading, setLoginLoding] = useState(false)
@@ -50,8 +51,10 @@ function Signup() {
 
     return (
         <Theme>
-            <section className=" min-h-screen flex items-center ">
-                <div className="flex flex-col items-center h-full w-full justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <div className='flex justify-center items-center'>
+          <Limiter>
+              <div className='min-h-screen items-center justify-center flex'>
+                  <div className='flex-1 items-center flex flex-col gap-3  transition-all'>
                     <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
                         Enfermagem
                     </a>
@@ -61,7 +64,7 @@ function Signup() {
                                 Cadastre-se
                             </h1>
                             {!signUpSuccefull ?
-                                <form onSubmit={handleSubmit(handleSingup)} className="space-y-4 md:space-y-6" action="#">
+                                <form onSubmit={handleSubmit(handleSingup)} className="" action="#">
                                     <Input
                                         register={register('studentCode')}
                                         label="Codigo do aluno"
@@ -95,10 +98,11 @@ function Signup() {
                             </p>
                         </div>
                     </div>
-                </div>
-            </section>
-        </Theme>
-
+                  </div>
+            </div>
+          </Limiter>
+        </div>
+    </Theme>
     )
 }
 

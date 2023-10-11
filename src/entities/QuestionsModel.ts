@@ -1,6 +1,6 @@
 export class QuestionsModel {
     public statement:string
-    public punctuation:string
+    public punctuation:number
     public id: number 
     public minPunctuation: number 
     public maxPunctuation: number 
