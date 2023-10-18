@@ -8,6 +8,7 @@ import Signup from './pages/Signup';
 import {AuthProvider} from './context/AuthContext';
 import { ToastContainer } from 'react-toastify';
 import Ranking from './pages/Ranking';
+import Certificate from './pages/Certificate';
 function App() {
   return (
     <Router>
@@ -20,6 +21,7 @@ function App() {
                 <Route path="signup" element={<Signup/>} />
                 <Route path="home" element={<Home/>} />
                 <Route path="questionary" element={<Questionary/>} />
+                <Route path="certificate" element={<Certificate/>} />
                 <Route path="ranking" element={<Ranking/>} />
                 <Route path="" element={<Home/>} />
                 <Route path="index.html" element={<Home/>} />
