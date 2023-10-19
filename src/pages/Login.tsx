@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Theme from '../components/Theme'
 import { Link, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { AuthContext } from '../context/AuthContext'
 import Loading from '../components/Loading'
-import Button from '../components/Button'
 import { zodResolver } from "@hookform/resolvers/zod"
 import Input from '../components/Input'
 import Limiter from '../components/Limiter'
+import logo from '../assets/logo_barao_branco_horizontal_nova.png'
 
 function Login() {
     const [loginLoading, setLoginLoading] = useState(false)
@@ -44,15 +44,16 @@ function Login() {
             <div className='flex justify-center items-center'>
                 <Limiter>
                     <div className='min-h-screen items-center justify-center flex'>
-                        <div className='flex-1 items-center flex flex-col gap-3 py-20 transition-all'>
-                            <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-white">
-                                Enfermagem
-                            </a>
+                        <div className='flex-1 items-center flex flex-col gap-6  transition-all '>
+                            <img className='w-60' src={logo} alt="" />
                             <div className="w-full rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 bg-gray-800 border-gray-700">
                                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                                    <h1 className="text-xl font-bold leading-tight tracking-tight text-white">
-                                        Entre na sua conta
-                                    </h1>
+                                    <h2 className="text-xl font-bold leading-tight tracking-tight text-white">
+                                        Quiz de Enfermagem
+                                    </h2>
+                                    <h2 className="text-xl font-semibold leading-tight tracking-tight text-white">
+                                        Entrar
+                                    </h2>
                                     <form onSubmit={handleSubmit(handleSignIn)} action="#">
                                         <Input
                                             register={register('studentCode')}

@@ -37,14 +37,12 @@ function Navbar() {
   return (
     isAuthenticated&&
     <React.Fragment>
-      <header className='fixed w-screen transition flex top-0 left-0  justify-end pr-7 items-center z-30 h-20'>
+      <header className='fixed w-screen transition flex top-0 right-0-0  justify-start pl-7 items-center z-30 h-20'>
         <div className='cursor-pointer' onClick={()=>setMobileMenuOpen(true)}>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.75" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
         </div>
-        <div className={`text-black fixed justify-end w-full flex top-0 h-screen transition-all ${mobileMenuOpen ? "left-0" : "left-full"}`}>
-          <div className=" w-full h-full flex " role="dialog" aria-modal="true">
-            <div onClick={()=>setMobileMenuOpen(false)}  className={"flex-1  "+(mobileMenuOpen? "":" ")}></div>
-            <div className="flex-col flex flex-1 inset-y-0 right-0 h-full w-10/12 overflow-y-auto bg-white dark:text-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <div className={`text-black fixed justify-start w-full flex top-0 h-screen transition-all ${mobileMenuOpen ? "right-0" : "right-full"}`}>
+          <div className=" w-full h-full flex " role="dialog" aria-modal="true">            <div className="flex-col flex flex-1 inset-y-0 right-0 h-full w-10/12 overflow-y-auto bg-white dark:text-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
               <div className="flex items-center justify-between ">
                 <a href="#" className="-m-1.5 p-1.5">
                   <span className="sr-only">Your Company</span>
@@ -74,6 +72,7 @@ function Navbar() {
                 </div>
               </div>
             </div>
+            <div onClick={()=>setMobileMenuOpen(false)}  className={"flex-1  "+(mobileMenuOpen? "":" ")}></div>
           </div>
         </div>
       </header>

@@ -65,6 +65,8 @@ function Questionary() {
 
                         })
 
+                        console.log( response.data.punctuation)
+
                         updateQuestions.punctuation = response.data.punctuation
 
                         updateQuestions.questionResponses[0].verify = true
@@ -104,7 +106,7 @@ function Questionary() {
     }
 
     function handleFinishForm() {
-        navigate("/ranking")
+        navigate("/certificate")
     }
 
     function calcPoints() {

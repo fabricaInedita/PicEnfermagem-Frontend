@@ -5,7 +5,7 @@ function Input({register,error,defaultValue,label,type,mask}:any) {
   return (
     <React.Fragment>
         <div className={'relative text-zinc-200'}>
-            <label className=' mb-3 font-semibold px-1'>{label}</label>
+            <label className=' mb-3 text-sm font-semibold px-1'>{label}</label>
             {type=="date"&&
               <InputMask defaultValue={defaultValue} {...register} mask="99-99-9999" maskChar="_" className='h-12 indent-3 bg-transparent w-full border-white rounded-lg border'
             />}
