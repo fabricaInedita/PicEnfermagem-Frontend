@@ -9,9 +9,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import Input from '../components/Input'
 import Limiter from '../components/Limiter'
 import logo from '../assets/logo_barao_branco_horizontal_nova.png'
+import Button from '../components/Button'
 
 function Login() {
     const [loginLoading, setLoginLoading] = useState(false)
+
     const navigate = useNavigate()
 
     const formSchema = z.object({
@@ -28,7 +30,6 @@ function Login() {
     const { signIn } = useContext(AuthContext)
 
     async function handleSignIn(data: any) {
-        console.log("data")
         setLoginLoading(true)
         await signIn(data)
             .then(() => {
@@ -44,7 +45,7 @@ function Login() {
             <div className='flex justify-center items-center'>
                 <Limiter>
                     <div className='min-h-screen items-center justify-center flex'>
-                        <div className='flex-1 items-center flex flex-col gap-6  transition-all '>
+                        <div className='flex-1 items-center flex flex-col gap-6 my-6 transition-all '>
                             <img className='w-60' src={logo} alt="" />
                             <div className="w-full rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 bg-gray-800 border-gray-700">
                                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -54,7 +55,7 @@ function Login() {
                                     <h2 className="text-xl font-semibold leading-tight tracking-tight text-white">
                                         Entrar
                                     </h2>
-                                    <form onSubmit={handleSubmit(handleSignIn)} action="#">
+                                    <form onSubmit={handleSubmit(handleSignIn)} className='flex flex-col gap-3' action="#">
                                         <Input
                                             register={register('studentCode')}
                                             label="Codigo do aluno"
@@ -67,13 +68,18 @@ function Login() {
                                             error={errors.password}
                                         />
                                         <div className="h-20 flex justify-center items-center">
-                                            {loginLoading ?
-                                                <Loading visible={true} className={"w-10 h-10"}></Loading> :
-                                                <button type="submit" className="w-full bg-purple-600 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Entrar</button>
-                                            }
+                                            <Button 
+                                                type="submit" 
+                                                loading={loginLoading}
+                                                className="text w-full text-white flex justify-center items-center white p-3 bg-purple-700 rounded-lg">
+                                                Entrar
+                                            </Button>
                                         </div>
                                         <p className="text-sm font-light text-gray-500">
                                             <Link to="/signup" className="font-medium text-primary-600 hover:underline">Cadastre-se</Link>
+                                        </p>
+                                        <p className="text-sm font-light text-gray-500">
+                                            <Link to="/require-change-password" className="font-medium text-primary-600 hover:underline">Recuperar Senha</Link>
                                         </p>
                                     </form>
                                 </div>

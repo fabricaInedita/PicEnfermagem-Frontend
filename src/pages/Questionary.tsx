@@ -180,11 +180,10 @@ function Questionary() {
                                                 <div className='gap-3 flex flex-col'>
                                                     {
                                                         questions.questionResponses[0].alternatives.map((item, index) =>
-                                                            <button
+                                                            <Button
                                                                 key={index}
                                                                 onClick={() => handleSelectQuestion(index)}
-                                                                className={
-                                                                    'border-2 cursor-pointer transition-all border-white  p-3 text-white font-semibold rounded-lg flex-col flex  '
+                                                                className={  'border-2 cursor-pointer transition-all border-white  p-3 text-white font-semibold rounded-lg flex-col flex  '
                                                                     +
                                                                     (
                                                                         questions.questionResponses[0]?.verify
@@ -213,10 +212,10 @@ function Questionary() {
                                                                             )
                                                                         }
                                                                     </p>
-                                                                    <p>
+                                                                    <p className='text-start'>
                                                                         {item.description}
                                                                     </p>
-                                                            </button>
+                                                            </Button>
                                                         )
                                                     }
 
@@ -226,32 +225,26 @@ function Questionary() {
 
                                                         questions.questionResponses.length > 1 ?
                                                             <Button
+                                                                className="text flex justify-center items-center white p-3 bg-orange-400 border-white border-2 text-white rounded-lg "
+                                                                loading={loadingNextQuestion}
                                                                 disable={loadingNextQuestion}
                                                                 submit={handleNextForm}>
-                                                                {
-                                                                    loadingNextQuestion
-                                                                        ?
-                                                                        <Loading visible={true} className={"w-6 h-6"} />
-                                                                        :
-                                                                        "Continuar"
-                                                                }
+                                                                    Continuar
                                                             </Button>
                                                             :
-                                                            <Button submit={handleFinishForm}>
+                                                            <Button 
+                                                                className="text flex justify-center items-center white p-3 bg-orange-400 border-white border-2 text-white rounded-lg "
+                                                                submit={handleFinishForm}>
                                                                 Terminar
                                                             </Button>
 
                                                         :
                                                         <Button
+                                                            className="text flex justify-center items-center white p-3 bg-orange-400 border-white border-2 text-white rounded-lg "
+                                                            loading={loadingNextQuestion}
                                                             disable={loadingNextQuestion}
                                                             submit={handleVerifyQuestion}>
-                                                            {
-                                                                loadingNextQuestion
-                                                                    ?
-                                                                    <Loading visible={true} className={"w-6 h-6"} />
-                                                                    :
-                                                                    "Verificar"
-                                                            }
+                                                                Verificar
                                                         </Button>
                                                 }
                                             </div>
@@ -268,7 +261,9 @@ function Questionary() {
                                                 </p>
                                             </div>
                                             <Link to={'/ranking'}>
-                                                <Button>
+                                                <Button
+                                                    className="text flex justify-center items-center white p-3 bg-orange-400 border-white border-2 text-white rounded-lg "
+                                                >
                                                     Ver ranking
                                                 </Button>
                                             </Link>

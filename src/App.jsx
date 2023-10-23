@@ -9,6 +9,10 @@ import {AuthProvider} from './context/AuthContext';
 import { ToastContainer } from 'react-toastify';
 import Ranking from './pages/Ranking';
 import Certificate from './pages/Certificate';
+import ConfirmEmail from './pages/ConfirmEmail';
+import ChangePassword from './pages/ChangePassword';
+import RequireChangePassword from './pages/RequireChangePassword'
+
 function App() {
   return (
     <Router>
@@ -23,6 +27,9 @@ function App() {
                 <Route path="questionary" element={<Questionary/>} />
                 <Route path="certificate" element={<Certificate/>} />
                 <Route path="ranking" element={<Ranking/>} />
+                <Route path="confirm-email" element={<ConfirmEmail/>} />
+                <Route path="change-password" element={<ChangePassword/>} />
+                <Route path="require-change-password" element={<RequireChangePassword/>} />
                 <Route path="" element={<Home/>} />
                 <Route path="index.html" element={<Home/>} />
               </Routes>

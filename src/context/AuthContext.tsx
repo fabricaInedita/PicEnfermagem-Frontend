@@ -55,7 +55,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const authNotRequired = [
     "/login",
-    "/signup"
+    "/signup",
+    "/confirm-email",
+    "/change-password",
+    "/require-change-password"
   ]
 
   useEffect(() => {
