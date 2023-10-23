@@ -6,6 +6,6 @@ export const verifyEmailUrl = `${api}/api/user/confirmEmail`
 export const postAnswerUrl = `${api}/api/answer`
 export const getRankingUrl = `${api}/get_rank`
 export const sendCertificateUrl = `${api}/api/user/certicate`
-export const requireChangePasswordUrl = `${api}/api/user/certicate`
-export const changePassword = `${api}/api/user/certicate`
+export const requireChangePasswordUrl = `${api}/api/user/send_reset_password_token`
+export const changePassword = `${api}/api/user/reset_password`
 

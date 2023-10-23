@@ -15,7 +15,7 @@ function ChangePassword() {
 
     const queryParameters = new URLSearchParams(window.location.search)
 
-    const token = queryParameters.get("token")
+    const token:any = queryParameters.get("token")
 
     const [loadingButton, setLoadingButton] = useState(false)
 
@@ -38,7 +38,8 @@ function ChangePassword() {
         setLoadingButton(true)
         loginService.changePassword({
             password:password,
-            confirmPassword:confirmPassword
+            confirmPassword:confirmPassword,
+            token:token
         })
             .then(response=>{
                 setLoadingButton(false)

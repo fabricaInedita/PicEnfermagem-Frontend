@@ -31,10 +31,11 @@ export class LoginService {
       })
     return result
   }
-  async changePassword({ password, confirmPassword }: { password: string, confirmPassword: string }) {
-    const result = axios.post(changePassword,{
+  async changePassword({ password, confirmPassword,token }: { password: string, confirmPassword: string,token:string }) {
+    const result = axios.patch(changePassword,{
       password:password,
-      confirmPassword:confirmPassword
+      confirmPassword:confirmPassword,
+      token: token
     })
       .then(response => {
         return response
@@ -46,9 +47,7 @@ export class LoginService {
     return result
   }
   async requireChangePassword(email:string) {
-    const result = axios.post(requireChangePasswordUrl,{
-      email:email
-    })
+    const result = axios.post(requireChangePasswordUrl+"?email="+email)
       .then(response => {
         return response
       })
