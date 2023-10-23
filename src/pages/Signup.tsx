@@ -88,16 +88,16 @@ function Signup() {
                                         type="password"
                                         error={errors.password}
                                     />
-                                    <div className="h-20 flex justify-center items-center">
-                                        {loginLoading ?
-                                            <Loading visible={true} className={"w-10 h-10"}></Loading> :
-                                            <Button type="submit" className="text w-full text-white flex justify-center items-center white p-3 bg-purple-700  rounded-lg ">
-                                                Registrar
-                                            </Button>
-                                        }
-                                    </div>
-                                    <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                        <Link to="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Entrar</Link>
+                                    <Button 
+                                        loading={loginLoading}
+                                        type="submit" 
+                                        className="text w-full text-white flex justify-center items-center white p-3 bg-purple-700  rounded-lg ">
+                                        Registrar
+                                    </Button>
+                                    <p className="text-sm font-light text-purple-300">
+                                        <Link to="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                                            Ja possui uma conta? Entre aqui
+                                        </Link>
                                     </p>        
                                 </form> 
                                 :

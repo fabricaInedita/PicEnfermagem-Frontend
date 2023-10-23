@@ -65,6 +65,9 @@ function RequireChangePassword() {
                                                 className="text w-full text-white flex justify-center items-center white p-3 bg-purple-700 rounded-lg">
                                                 Solicitar 
                                             </Button>
+                                            <p className="text-sm font-light text-purple-300">
+                                                <Link to="/login" className="font-medium text-primary-600 hover:underline">Voltar para tela de login</Link>
+                                            </p>
                                         </form>
                                         :
                                         <div className='flex flex-col gap-3 justify-center items-center'>
