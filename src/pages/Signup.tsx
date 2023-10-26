@@ -93,18 +93,18 @@ function Signup() {
                                         type="submit" 
                                         className="text w-full text-white flex justify-center items-center white p-3 bg-purple-700  rounded-lg ">
                                         Registrar
-                                    </Button>
-                                    <p className="text-sm font-light text-purple-300">
-                                        <Link to="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">
-                                            Ja possui uma conta? Entre aqui
-                                        </Link>
-                                    </p>        
+                                    </Button>    
                                 </form> 
                                 :
                                 <div className='text-white'>
-                                    <p>Conta criada com sucesso</p>
+                                    <p>Conta criada com sucesso. Verifique sua caixa de e-mail para ativar sua conta.</p>
                                 </div>
                             }
+                            <p className="text-sm font-light text-purple-300">
+                                <Link to="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                                    Ja possui uma conta? Entre aqui
+                                </Link>
+                            </p>    
                         </div>
                     </div>
                 </div>

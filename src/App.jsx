@@ -23,13 +23,13 @@ function App() {
               <Routes>
                 <Route path="login" element={<Login/>} />
                 <Route path="signup" element={<Signup/>} />
+                <Route path="confirm-email" element={<ConfirmEmail/>} />         
+                <Route path="change-password" element={<ChangePassword/>} />
+                <Route path="require-change-password" element={<RequireChangePassword/>} />      
+
                 <Route path="home" element={<Home/>} />
                 <Route path="questionary" element={<Questionary/>} />
-                <Route path="certificate" element={<Certificate/>} />
                 <Route path="ranking" element={<Ranking/>} />
-                <Route path="confirm-email" element={<ConfirmEmail/>} />
-                <Route path="change-password" element={<ChangePassword/>} />
-                <Route path="require-change-password" element={<RequireChangePassword/>} />
                 <Route path="" element={<Home/>} />
                 <Route path="index.html" element={<Home/>} />
               </Routes>

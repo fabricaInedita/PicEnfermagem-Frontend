@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import Limiter from '../components/Limiter'
 import Button from '../components/Button'
 import Theme from '../components/Theme'
@@ -6,6 +6,7 @@ import Loading from '../components/Loading'
 import { QuestionaryService } from '../services/QuestionaryService';
 import { Link, useNavigate } from "react-router-dom";
 import { QuestionaryModel } from '../entities/QuestionaryModel';
+import { useTime, useTimer } from 'react-timer-hook'
 
 
 function Questionary() {
@@ -20,6 +21,17 @@ function Questionary() {
 
     const [loadingNextQuestion, setLoadingNextQuestion] = useState(false)
 
+    const startTimer = new Date()
+
+    startTimer.setSeconds(startTimer.getSeconds() + 600)
+
+    const { restart, minutes, seconds } = useTimer({
+        expiryTimestamp: startTimer,
+        onExpire: () => handleGetForm
+    })
+
+    const [timebar, setTimeBar] = useState({ width: 0, timestemp: 0 })
+
     const questionaryService = new QuestionaryService()
 
     const [formTransition, setFormTransition] = useState({
@@ -28,8 +40,8 @@ function Questionary() {
     })
 
     function handleSelectQuestion(index: number) {
+        if (questions.questionResponses[0].verify !== true) {
 
-        if (questions.questionResponses[0].verify !== true ) {
             const updateQuestions = { ...questions }
             updateQuestions.questionResponses[0].alternatives.forEach(item => {
                 item.selected = false
@@ -37,6 +49,8 @@ function Questionary() {
             updateQuestions.questionResponses[0].alternatives[index].selected = true
             setQuestions(updateQuestions)
         }
+
+
     }
 
     function handleVerifyQuestion() {
@@ -47,25 +61,25 @@ function Questionary() {
         }
 
         for (let index = 0; index < questions.questionResponses[0].alternatives.length; index++) {
+
+            const [points, elapsedTime] = calcPoints()
+
             if (questions.questionResponses[0].alternatives[index].selected) {
                 questionaryService.postAnswer(
                     questions.questionResponses[0].id,
-                    calcPoints(),
+                    points,
+                    elapsedTime,
                     questions.questionResponses[0].alternatives[index].id
                 )
                     .then(response => {
                         const updateQuestions = { ...questions }
 
-                        updateQuestions.questionResponses[0].alternatives.forEach((item,index) => {
-
-                            if(item.id == response.data.alternativeCorrectId) {
+                        updateQuestions.questionResponses[0].alternatives.forEach((item, index) => {
+                            if (item.id == response.data.alternativeCorrectId) {
 
                                 updateQuestions.questionResponses[0].alternatives[index].isCorrect = true
                             }
-
                         })
-
-                        console.log( response.data.punctuation)
 
                         updateQuestions.punctuation = response.data.punctuation
 
@@ -76,6 +90,7 @@ function Questionary() {
                         setLoadingNextQuestion(false)
                     })
                     .catch((error) => {
+                        console.log(error)
                         setLoadingNextQuestion(false)
                     })
 
@@ -106,7 +121,7 @@ function Questionary() {
     }
 
     function handleFinishForm() {
-        navigate("/certificate")
+        navigate("/ranking")
     }
 
     function calcPoints() {
@@ -115,11 +130,11 @@ function Questionary() {
 
         const minPoints = questions.questionResponses[0].minPunctuation
 
-        const expectedTimeQuestion = 20
+        const expectedTimeQuestion = 60
 
-        const endTime = new Date(String(window.localStorage.getItem("endQuestionTIme")))
+        const endTime: any = new Date(String(window.localStorage.getItem("endQuestionTIme")))
 
-        const startTime = new Date(String(window.localStorage.getItem("startQuestionTIme")))
+        const startTime: any = new Date(String(window.localStorage.getItem("startQuestionTIme")))
 
         const elapsedTime = (endTime - startTime) / 1000;
 
@@ -128,23 +143,62 @@ function Questionary() {
         const removePoints = (elapsedTime * timePoints) / expectedTimeQuestion;
 
         if (elapsedTime < expectedTimeQuestion) {
-            return maxPoints - removePoints;
+            return [maxPoints - removePoints, elapsedTime];
         } else {
-            return minPoints;
+            return [minPoints, Math.floor(elapsedTime/1000)];
         }
     }
 
-    useEffect(() => {
+    function handleGetForm() {
         if (!window.localStorage.getItem("startQuestionTIme")) {
             window.localStorage.setItem("startQuestionTIme", new Date().toISOString())
         }
+
         questionaryService.getQuestions()
-            .then((response) => {
+            .then(async (response) => {
                 setQuestions(response.data)
                 setLoadingQuestionary(true)
+
+                const initialDate = new Date(response.data.initialFormDate)
+
+                const currentDate: any = new Date()
+
+                const expectedEndDate: any = new Date(initialDate.setMinutes(initialDate.getMinutes() + 40))
+
+                const initialPorcentage = (((expectedEndDate - currentDate) / 1000 / 60) * 100) / 40
+
+                const time = expectedEndDate - currentDate;
+
+                setTimeBar({
+                    width: Math.floor(initialPorcentage),
+                    timestemp: time / initialPorcentage
+                })
+
+                restart(expectedEndDate)
+
+                if (expectedEndDate > new Date()) {
+                    setTimeout(() => {
+                        handleGetForm()
+                    }, time);
+                }
+
             })
             .catch(() => {
             })
+    }
+
+    useEffect(() => {
+        if (timebar.timestemp != 0)
+            setTimeout(() => {
+                setTimeBar({
+                    width: timebar.width - 1,
+                    timestemp: timebar.timestemp
+                })
+            }, Math.floor(timebar.timestemp));
+    }, [timebar])
+
+    useEffect(() => {
+        handleGetForm()
     }, [])
 
     return (
@@ -158,7 +212,24 @@ function Questionary() {
                                     ?
                                     questions.questionResponses.length > 0
                                         ?
-                                        <React.Fragment>
+                                        <Fragment>
+                                            <div className='flex gap-3'>
+                                                <p className='border-white border-2 rounded-md font-semibold h-full px-3 flex items-center text-1x text-white'>
+                                                    {String(minutes).padStart(2, "0")}:
+                                                    {String(seconds).padStart(2, "0")}
+                                                </p>
+                                                <div className='w-full border-white rounded-md border-2'>
+                                                    <div
+                                                        className='h-12 bg-red-500 grad-ani rounded-md'
+                                                        style={
+                                                            {
+                                                                width: timebar.width + "%"
+                                                            }
+                                                        }
+                                                    >
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div className='flex gap-3'>
                                                 <p className='text-white font-semibold p-3 flex-1 border-white border-2 rounded-lg'>
                                                     {questions.questionResponses.length > 1 ?
@@ -182,8 +253,8 @@ function Questionary() {
                                                         questions.questionResponses[0].alternatives.map((item, index) =>
                                                             <Button
                                                                 key={index}
-                                                                onClick={() => handleSelectQuestion(index)}
-                                                                className={  'border-2 cursor-pointer transition-all border-white  p-3 text-white font-semibold rounded-lg flex-col flex  '
+                                                                submit={() => handleSelectQuestion(index)}
+                                                                className={'border-2 cursor-pointer transition-all border-white  p-3 text-white font-semibold rounded-lg flex-col flex  '
                                                                     +
                                                                     (
                                                                         questions.questionResponses[0]?.verify
@@ -201,20 +272,20 @@ function Questionary() {
                                                                             )
                                                                     )
                                                                 }>
-                                                                    <p className='text-sm text-zinc-200'>
-                                                                        {
-                                                                            questions.questionResponses[0]?.verify
-                                                                            &&
-                                                                            (item.isCorrect && item.selected
-                                                                                ? "Você acertou, parabéns!" :
-                                                                                item.isCorrect && "Alternativa correta está aqui!" ||
-                                                                                item.selected && "Que pena! Alternativa errada, continue tentando até o fim"
-                                                                            )
-                                                                        }
-                                                                    </p>
-                                                                    <p className='text-start'>
-                                                                        {item.description}
-                                                                    </p>
+                                                                <p className='text-sm text-zinc-200'>
+                                                                    {
+                                                                        questions.questionResponses[0]?.verify
+                                                                        &&
+                                                                        (item.isCorrect && item.selected
+                                                                            ? "Você acertou, parabéns!" :
+                                                                            item.isCorrect && "Alternativa correta está aqui!" ||
+                                                                            item.selected && "Que pena! Alternativa errada, continue tentando até o fim"
+                                                                        )
+                                                                    }
+                                                                </p>
+                                                                <p className='text-start'>
+                                                                    {item.description}
+                                                                </p>
                                                             </Button>
                                                         )
                                                     }
@@ -229,10 +300,10 @@ function Questionary() {
                                                                 loading={loadingNextQuestion}
                                                                 disable={loadingNextQuestion}
                                                                 submit={handleNextForm}>
-                                                                    Continuar
+                                                                Continuar
                                                             </Button>
                                                             :
-                                                            <Button 
+                                                            <Button
                                                                 className="text flex justify-center items-center white p-3 bg-orange-400 border-white border-2 text-white rounded-lg "
                                                                 submit={handleFinishForm}>
                                                                 Terminar
@@ -244,11 +315,11 @@ function Questionary() {
                                                             loading={loadingNextQuestion}
                                                             disable={loadingNextQuestion}
                                                             submit={handleVerifyQuestion}>
-                                                                Verificar
+                                                            Verificar
                                                         </Button>
                                                 }
                                             </div>
-                                        </React.Fragment>
+                                        </Fragment>
                                         :
                                         <div className='flex-1 flex text-white justify-center items-center gap-6 flex-col'>
 

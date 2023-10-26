@@ -25,11 +25,17 @@ export class QuestionaryService {
       return await result 
     }
 
-    async postAnswer(id:number, punctuation:number, alternativeId:number) {
-
+    async postAnswer(id:number, punctuation:number,elapsedTime:number, alternativeId:number) {
+      console.log(        {
+        questionId: id,
+        answerTime:elapsedTime,
+        punctuation: punctuation,
+        alternativeId: alternativeId
+      },)
       const result = axios.post(postAnswerUrl,
         {
           questionId: id,
+          answerTime:elapsedTime,
           punctuation: punctuation,
           alternativeId: alternativeId
         },

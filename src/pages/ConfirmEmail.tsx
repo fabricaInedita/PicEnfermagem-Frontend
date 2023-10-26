@@ -18,7 +18,7 @@ function ConfirmEmail() {
 
     const token:any = queryParameters.get("token")
 
-    const userId:any = queryParameters.get("userId")
+    const userId:any = queryParameters.get("userid")
 
     const [loadingValidation, setLoadingValidation] = useState(true)
 
@@ -27,6 +27,7 @@ function ConfirmEmail() {
     useEffect(() => {
         loginService.verifyEmail({token:token,userId:userId})
             .then(response=>{
+                console.log(response)
                 setLoadingValidation(false)
                 setValidationIsWord(true)
             })

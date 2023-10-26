@@ -19,7 +19,7 @@ export class LoginService {
   }
   async verifyEmail({ token, userId }: { token: string, userId: string }) {
     const result = axios.post(verifyEmailUrl,{
-      token:`${token}&userId=${userId}`,
+      token:`${token}&userid=${userId}`,
       userId: userId
     })
       .then(response => {
