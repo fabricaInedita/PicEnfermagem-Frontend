@@ -10,7 +10,6 @@ function Home() {
   const {isAuthenticated} = useContext(AuthContext)
 
   return (
-    <Theme>
         <div className=' flex flex-col gap-10 justify-center items-center h-screen'>
           <h1 className='text-xl text-white'>Desafie suas habilidades</h1>
           <Link to={'/questionary'}>
@@ -20,7 +19,6 @@ function Home() {
             </Button>
           </Link>
         </div>
-    </Theme>
   )
 }
 

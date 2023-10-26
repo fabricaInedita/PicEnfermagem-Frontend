@@ -67,6 +67,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const timeDiference = new Date(expirationDate).getTime() - new Date().getTime() 
 
+    if(token&&authNotRequired.includes(window.location.pathname))
+    navigate("/home")
+
     setTimeout(() => {
       if (token) {
         logout()

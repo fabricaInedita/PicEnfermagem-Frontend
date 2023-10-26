@@ -32,7 +32,7 @@ function Input({register,error,defaultValue,label,type,mask}:any) {
             {type=="mask"&&
               <InputMask  {...register} mask={mask} maskChar="_" className='h-12 indent-3 bg-transparent w-full border-white rounded-lg border'
             />}
-          {error && <span className='text-red-400'>{error.message}</span>}
+          {error && <span className='text-red-400 w-fit'>{error.message}</span>}
         </div>
     </React.Fragment>
   )

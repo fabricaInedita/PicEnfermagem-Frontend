@@ -42,49 +42,47 @@ function Login() {
     }
 
     return (
-        <Theme>
-            <div className='flex justify-center items-center'>
-                <Limiter>
-                    <div className='min-h-screen items-center justify-center flex'>
-                        <div className='flex-1 items-center flex flex-col gap-6 my-6 transition-all '>
-                            <img className='w-60' src={barao} alt="" />
-                            <div className="w-full rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 bg-gray-800 border-gray-700">
-                                <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                                    <h2 className="text-x2 font-semibold leading-tight tracking-tight text-white">
-                                        Seja Bem vindo de volta
-                                    </h2>
-                                    <form onSubmit={handleSubmit(handleSignIn)} className='flex flex-col gap-3' action="#">
-                                        <Input
-                                            register={register('studentCode')}
-                                            label="Codigo do aluno"
-                                            error={errors.studentCode}
-                                        />
-                                        <Input
-                                            register={register('password')}
-                                            label="Senha"
-                                            type="password"
-                                            error={errors.password}
-                                        />
-                                        <Button 
-                                            type="submit" 
-                                            loading={loginLoading}
-                                            className="text w-full text-white flex justify-center items-center white p-3 bg-purple-700 rounded-lg">
-                                            Entrar
-                                        </Button>
-                                        <p className="text-sm font-light text-purple-300">
-                                            <Link to="/signup" className="font-medium text-primary-600 hover:underline">Sem acesso? Cadastre-se</Link>
-                                        </p>
-                                        <p className="text-sm font-light text-purple-300">
-                                            <Link to="/require-change-password" className="font-medium text-primary-600 hover:underline">Esqueceu a senha? </Link>
-                                        </p>
-                                    </form>
-                                </div>
+        <div className='flex justify-center items-center'>
+            <Limiter>
+                <div className='min-h-screen items-center justify-center flex'>
+                    <div className='flex-1 items-center flex flex-col gap-6 my-6 transition-all '>
+                        <img className='w-60' src={barao} alt="" />
+                        <div className="rounded-lg shadow max-w-xs  bg-gray-800 border-gray-700">
+                            <div className="p-6 space-y-4">
+                                <h2 className="text-x2 font-semibold leading-tight tracking-tight text-white">
+                                    Seja Bem vindo de volta
+                                </h2>
+                                <form onSubmit={handleSubmit(handleSignIn)} className='flex flex-col gap-3' action="#">
+                                    <Input
+                                        register={register('studentCode')}
+                                        label="Codigo do aluno"
+                                        error={errors.studentCode}
+                                    />
+                                    <Input
+                                        register={register('password')}
+                                        label="Senha"
+                                        type="password"
+                                        error={errors.password}
+                                    />
+                                    <Button 
+                                        type="submit" 
+                                        loading={loginLoading}
+                                        className="text w-full text-white flex justify-center items-center white p-3 bg-purple-700 rounded-lg">
+                                        Entrar
+                                    </Button>
+                                    <p className="text-sm font-light text-purple-300">
+                                        <Link to="/signup" className="font-medium text-primary-600 hover:underline">Sem acesso? Cadastre-se</Link>
+                                    </p>
+                                    <p className="text-sm font-light text-purple-300">
+                                        <Link to="/require-change-password" className="font-medium text-primary-600 hover:underline">Esqueceu a senha? </Link>
+                                    </p>
+                                </form>
                             </div>
                         </div>
                     </div>
-                </Limiter>
-            </div>
-        </Theme>
+                </div>
+            </Limiter>
+        </div>
     )
 }
 

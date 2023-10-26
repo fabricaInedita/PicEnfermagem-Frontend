@@ -202,153 +202,151 @@ function Questionary() {
     }, [])
 
     return (
-        <Theme>
-            <div className='flex justify-center items-center'>
-                <Limiter>
-                    <div className='min-h-screen justify-center flex'>
-                        <div className='flex-1 flex flex-col gap-3 py-20 transition-all'>
-                            {
-                                loadingQuestionary
+        <div className='flex justify-center items-center'>
+            <Limiter>
+                <div className='min-h-screen justify-center flex'>
+                    <div className='flex-1 flex flex-col gap-3 py-20 transition-all'>
+                        {
+                            loadingQuestionary
+                                ?
+                                questions.questionResponses.length > 0
                                     ?
-                                    questions.questionResponses.length > 0
-                                        ?
-                                        <Fragment>
-                                            <div className='flex gap-3'>
-                                                <p className='border-white border-2 rounded-md font-semibold h-full px-3 flex items-center text-1x text-white'>
-                                                    {String(minutes).padStart(2, "0")}:
-                                                    {String(seconds).padStart(2, "0")}
-                                                </p>
-                                                <div className='w-full border-white rounded-md border-2'>
-                                                    <div
-                                                        className='h-12 bg-red-500 grad-ani rounded-md'
-                                                        style={
-                                                            {
-                                                                width: timebar.width + "%"
-                                                            }
+                                    <Fragment>
+                                        <div className='flex gap-3'>
+                                            <p className='border-white border-2 rounded-md font-semibold h-full px-3 flex items-center text-1x text-white'>
+                                                {String(minutes).padStart(2, "0")}:
+                                                {String(seconds).padStart(2, "0")}
+                                            </p>
+                                            <div className='w-full border-white rounded-md border-2'>
+                                                <div
+                                                    className='h-12 bg-red-500 grad-ani rounded-md'
+                                                    style={
+                                                        {
+                                                            width: timebar.width + "%"
                                                         }
-                                                    >
-                                                    </div>
+                                                    }
+                                                >
                                                 </div>
                                             </div>
-                                            <div className='flex gap-3'>
-                                                <p className='text-white font-semibold p-3 flex-1 border-white border-2 rounded-lg'>
-                                                    {questions.questionResponses.length > 1 ?
-                                                        `Faltam ${questions.questionResponses.length} perguntas`
-                                                        :
-                                                        `Falta ${questions.questionResponses.length} pergunta`
-                                                    }
-                                                </p>
-                                                <p className='text-white font-semibold p-3 border-white border-2 rounded-lg bg-orange-400'>
-                                                    PT: {String(Math.floor(questions.punctuation)).padStart(4, "0")}
+                                        </div>
+                                        <div className='flex gap-3'>
+                                            <p className='text-white font-semibold p-3 flex-1 border-white border-2 rounded-lg'>
+                                                {questions.questionResponses.length > 1 ?
+                                                    `Faltam ${questions.questionResponses.length} perguntas`
+                                                    :
+                                                    `Falta ${questions.questionResponses.length} pergunta`
+                                                }
+                                            </p>
+                                            <p className='text-white font-semibold p-3 border-white border-2 rounded-lg bg-orange-400'>
+                                                PT: {String(Math.floor(questions.punctuation)).padStart(4, "0")}
+                                            </p>
+                                        </div>
+                                        <div className={'gap-3 flex flex-col transition-all' + (formTransition.opacity ? " opacity-0" : " opacity-100")}>
+                                            <div className='bg-purple-600  border-white border-2 rounded-lg p-5'>
+                                                <p className='text-white text-md'>
+                                                    {questions.questionResponses[0].statement}
                                                 </p>
                                             </div>
-                                            <div className={'gap-3 flex flex-col transition-all' + (formTransition.opacity ? " opacity-0" : " opacity-100")}>
-                                                <div className='bg-purple-600  border-white border-2 rounded-lg p-5'>
-                                                    <p className='text-white text-md'>
-                                                        {questions.questionResponses[0].statement}
-                                                    </p>
-                                                </div>
-                                                <div className='gap-3 flex flex-col'>
-                                                    {
-                                                        questions.questionResponses[0].alternatives.map((item, index) =>
-                                                            <Button
-                                                                key={index}
-                                                                submit={() => handleSelectQuestion(index)}
-                                                                className={'border-2 cursor-pointer transition-all border-white  p-3 text-white font-semibold rounded-lg flex-col flex  '
-                                                                    +
-                                                                    (
-                                                                        questions.questionResponses[0]?.verify
-                                                                            ?
-                                                                            (item.isCorrect && item.selected
-                                                                                ? " bg-emerald-400" :
-                                                                                item.isCorrect && " bg-emerald-400" ||
-                                                                                item.selected && " bg-red-400"
-                                                                            )
-                                                                            :
-                                                                            (item.selected == true
-                                                                                ?
-                                                                                " bg-orange-400" :
-                                                                                " bg-purple-500"
-                                                                            )
-                                                                    )
-                                                                }>
-                                                                <p className='text-sm text-zinc-200'>
-                                                                    {
-                                                                        questions.questionResponses[0]?.verify
-                                                                        &&
-                                                                        (item.isCorrect && item.selected
-                                                                            ? "Você acertou, parabéns!" :
-                                                                            item.isCorrect && "Alternativa correta está aqui!" ||
-                                                                            item.selected && "Que pena! Alternativa errada, continue tentando até o fim"
-                                                                        )
-                                                                    }
-                                                                </p>
-                                                                <p className='text-start'>
-                                                                    {item.description}
-                                                                </p>
-                                                            </Button>
-                                                        )
-                                                    }
-
-                                                </div>
+                                            <div className='gap-3 flex flex-col'>
                                                 {
-                                                    questions.questionResponses[0].verify == true ?
+                                                    questions.questionResponses[0].alternatives.map((item, index) =>
+                                                        <Button
+                                                            key={index}
+                                                            submit={() => handleSelectQuestion(index)}
+                                                            className={'border-2 cursor-pointer transition-all border-white  p-3 text-white font-semibold rounded-lg flex-col flex  '
+                                                                +
+                                                                (
+                                                                    questions.questionResponses[0]?.verify
+                                                                        ?
+                                                                        (item.isCorrect && item.selected
+                                                                            ? " bg-emerald-400" :
+                                                                            item.isCorrect && " bg-emerald-400" ||
+                                                                            item.selected && " bg-red-400"
+                                                                        )
+                                                                        :
+                                                                        (item.selected == true
+                                                                            ?
+                                                                            " bg-orange-400" :
+                                                                            " bg-purple-500"
+                                                                        )
+                                                                )
+                                                            }>
+                                                            <p className='text-sm text-zinc-200'>
+                                                                {
+                                                                    questions.questionResponses[0]?.verify
+                                                                    &&
+                                                                    (item.isCorrect && item.selected
+                                                                        ? "Você acertou, parabéns!" :
+                                                                        item.isCorrect && "Alternativa correta está aqui!" ||
+                                                                        item.selected && "Que pena! Alternativa errada, continue tentando até o fim"
+                                                                    )
+                                                                }
+                                                            </p>
+                                                            <p className='text-start'>
+                                                                {item.description}
+                                                            </p>
+                                                        </Button>
+                                                    )
+                                                }
 
-                                                        questions.questionResponses.length > 1 ?
-                                                            <Button
-                                                                className="text flex justify-center items-center white p-3 bg-orange-400 border-white border-2 text-white rounded-lg "
-                                                                loading={loadingNextQuestion}
-                                                                disable={loadingNextQuestion}
-                                                                submit={handleNextForm}>
-                                                                Continuar
-                                                            </Button>
-                                                            :
-                                                            <Button
-                                                                className="text flex justify-center items-center white p-3 bg-orange-400 border-white border-2 text-white rounded-lg "
-                                                                submit={handleFinishForm}>
-                                                                Terminar
-                                                            </Button>
+                                            </div>
+                                            {
+                                                questions.questionResponses[0].verify == true ?
 
-                                                        :
+                                                    questions.questionResponses.length > 1 ?
                                                         <Button
                                                             className="text flex justify-center items-center white p-3 bg-orange-400 border-white border-2 text-white rounded-lg "
                                                             loading={loadingNextQuestion}
                                                             disable={loadingNextQuestion}
-                                                            submit={handleVerifyQuestion}>
-                                                            Verificar
+                                                            submit={handleNextForm}>
+                                                            Continuar
                                                         </Button>
-                                                }
-                                            </div>
-                                        </Fragment>
-                                        :
-                                        <div className='flex-1 flex text-white justify-center items-center gap-6 flex-col'>
+                                                        :
+                                                        <Button
+                                                            className="text flex justify-center items-center white p-3 bg-orange-400 border-white border-2 text-white rounded-lg "
+                                                            submit={handleFinishForm}>
+                                                            Terminar
+                                                        </Button>
 
-                                            <div className='w-44 flex flex-col items-center justify-center gap-3'>
-                                                <p className='text-2xl'>
-                                                    Opss...
-                                                </p>
-                                                <p className='text-lg'>
-                                                    Parece que você não tem mais perguntas disponiveis!
-                                                </p>
-                                            </div>
-                                            <Link to={'/ranking'}>
-                                                <Button
-                                                    className="text flex justify-center items-center white p-3 bg-orange-400 border-white border-2 text-white rounded-lg "
-                                                >
-                                                    Ver ranking
-                                                </Button>
-                                            </Link>
+                                                    :
+                                                    <Button
+                                                        className="text flex justify-center items-center white p-3 bg-orange-400 border-white border-2 text-white rounded-lg "
+                                                        loading={loadingNextQuestion}
+                                                        disable={loadingNextQuestion}
+                                                        submit={handleVerifyQuestion}>
+                                                        Verificar
+                                                    </Button>
+                                            }
                                         </div>
+                                    </Fragment>
                                     :
-                                    <div className='flex justify-center items-center h-full'>
-                                        <Loading visible={true} className={"w-14 h-14"}></Loading>
+                                    <div className='flex-1 flex text-white justify-center items-center gap-6 flex-col'>
+
+                                        <div className='w-44 flex flex-col items-center justify-center gap-3'>
+                                            <p className='text-2xl'>
+                                                Opss...
+                                            </p>
+                                            <p className='text-lg'>
+                                                Parece que você não tem mais perguntas disponiveis!
+                                            </p>
+                                        </div>
+                                        <Link to={'/ranking'}>
+                                            <Button
+                                                className="text flex justify-center items-center white p-3 bg-orange-400 border-white border-2 text-white rounded-lg "
+                                            >
+                                                Ver ranking
+                                            </Button>
+                                        </Link>
                                     </div>
-                            }
-                        </div>
+                                :
+                                <div className='flex justify-center items-center h-full'>
+                                    <Loading visible={true} className={"w-14 h-14"}></Loading>
+                                </div>
+                        }
                     </div>
-                </Limiter>
-            </div>
-        </Theme>
+                </div>
+            </Limiter>
+        </div>
     )
 }
 

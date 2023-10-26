@@ -53,14 +53,13 @@ function Signup() {
     }
 
     return (
-        <Theme>
         <div className='flex justify-center items-center'>
-          <Limiter>
-          <div className='min-h-screen items-center justify-center flex'>
+            <Limiter>
+            <div className='min-h-screen items-center justify-center flex'>
                 <div className='flex-1 items-center flex flex-col gap-6 my-6 transition-all '>
                     <img className='w-60' src={logo} alt="" />
-                    <div className="w-full rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 bg-gray-800 border-gray-700">
-                        <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+                    <div className="w-full rounded-lg shadow max-w-xs  bg-gray-800 border-gray-700">
+                        <div className="p-6 space-y-4 ">
                             <h2 className="text-xl font-semibold leading-tight tracking-tight text-white">
                                 Cadastre-se
                             </h2>
@@ -109,9 +108,8 @@ function Signup() {
                     </div>
                 </div>
             </div>
-          </Limiter>
+            </Limiter>
         </div>
-    </Theme>
     )
 }
 
