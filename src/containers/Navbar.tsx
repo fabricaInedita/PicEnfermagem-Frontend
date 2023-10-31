@@ -63,7 +63,7 @@ function Navbar() {
                 <Gradientline/>
               </div>
               <div className='text-black mt-3'>
-                <Link to={'questionary'}>Quizz</Link>
+                <Link to={'questionary'}>Quiz</Link>
                 <Gradientline/>
               </div>
               <div className='flex-1 flex items-end'>

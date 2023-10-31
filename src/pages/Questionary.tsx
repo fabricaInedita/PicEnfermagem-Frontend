@@ -202,10 +202,10 @@ function Questionary() {
     }, [])
 
     return (
-        <div className='flex justify-center items-center'>
+        <div className='flex justify-center items-center sm:w-2/3 sl'>
             <Limiter>
-                <div className='min-h-screen justify-center flex'>
-                    <div className='flex-1 flex flex-col gap-3 py-20 transition-all'>
+                <div className='min-h-screen justify-center flex '>
+                    <div className='flex-1 flex flex-col gap-3 py-20 transition-all w-full'>
                         {
                             loadingQuestionary
                                 ?
@@ -327,7 +327,7 @@ function Questionary() {
                                                 Opss...
                                             </p>
                                             <p className='text-lg'>
-                                                Parece que você não tem mais perguntas disponiveis!
+                                                Parece que você não tem mais perguntas disponíveis!
                                             </p>
                                         </div>
                                         <Link to={'/ranking'}>

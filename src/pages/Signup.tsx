@@ -87,6 +87,14 @@ function Signup() {
                                         type="password"
                                         error={errors.password}
                                     />
+                                    <div className='flex flex-col gap-3 text-gray-300'>
+                                        <p>A senha deve possuir:</p>
+                                        <ul className='text-gray-400'>
+                                            <li>Letra maiúscula </li>
+                                            <li>Letra minúscula</li>
+                                            <li>Caractere especial (! . * ?)</li>
+                                        </ul>
+                                    </div>
                                     <Button 
                                         loading={loginLoading}
                                         type="submit" 
