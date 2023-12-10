@@ -249,7 +249,7 @@ function Questionary() {
                                             </div>
                                             <div className='gap-3 flex flex-col'>
                                                 {
-                                                    questions.questionResponses[0].alternatives.map((item, index) =>
+                                                    questions.questionResponses[0].alternatives.map((item, index) => 
                                                         <Button
                                                             key={index}
                                                             submit={() => handleSelectQuestion(index)}
@@ -285,11 +285,27 @@ function Questionary() {
                                                             <p className='text-start'>
                                                                 {item.description}
                                                             </p>
+
                                                         </Button>
+
                                                     )
+
                                                 }
 
                                             </div>
+
+                                            { questions.questionResponses[0].alternatives.map((item) =>
+                                                            
+                                                    questions.questionResponses[0]?.verify && item.isCorrect != item.selected &&
+                                                    (item.isCorrect &&
+                                                        <div className='text-white border-2 p-3 rounded-lg bg-orange-300'>
+                                                            <p className='font-semibold pb-2'>Justificativa:</p>
+                                                            <p>{questions.questionResponses[0].explanation}</p>
+                                                        </div>
+                                                    ) 
+                                                      
+                                                )   
+                                            }
                                             {
                                                 questions.questionResponses[0].verify == true ?
 
