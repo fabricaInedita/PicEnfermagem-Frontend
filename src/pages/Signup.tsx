@@ -104,7 +104,7 @@ function Signup() {
                                 </form> 
                                 :
                                 <div className='text-white'>
-                                    <p>Conta criada com sucesso. Verifique sua caixa de e-mail para ativar sua conta.</p>
+                                    <p>Conta criada com sucesso.</p>
                                 </div>
                             }
                             <p className="text-sm font-light text-purple-300">
