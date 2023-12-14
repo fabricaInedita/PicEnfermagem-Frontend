@@ -17,4 +17,5 @@ export class QuestionsModel {
         selected: boolean
     }[]
     public verify: boolean
+    public explanation:string
 }
